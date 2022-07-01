@@ -1,13 +1,21 @@
-// here we define the SCHEMA
+// here we define the price SCHEMA
 const mongoose = require('mongoose')
 
-const priceSchema = mongoose.Schema({
-    amount: {
-        type: Number,
-        required: [true, 'Please add an amount']
+const priceSchema = mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'User',
+        },
+        text: {
+            type: String,
+            required: [true, 'Please write some text'],
+        }
+    },
+    {
+        timestamps: true
     }
-}, {
-    timestamps: true
-})
+)
 
 module.exports = mongoose.model('Price', priceSchema)

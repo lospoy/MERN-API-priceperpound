@@ -2,14 +2,16 @@
 // NOT using try-catch, but error hanlder via 'express-async-handler'
 
 const asyncHandler = require('express-async-handler')
+const { restart } = require('nodemon')
 
 const Price = require('../models/priceModel')
+const User = require('../models/userModel')
 
 // @desc    Get prices
 // @route   GET /api/prices
 // @access  Private
 const getPrices = asyncHandler(async (req, res) => {
-    const prices = await Price.find()
+    const prices = await Price.find({ user: req.user.id })
 
     res.status(200).json(prices)
 })
@@ -27,7 +29,8 @@ const savePrice = asyncHandler(async (req, res) => {
     const price = await Price.create({
         // .text regardless of type? (works with number)
         // @route /models/priceModel
-        amount: req.body.text
+        text: req.body.text,
+        user: req.user.id,
     })
 
     res.status(200).json(price)
@@ -44,6 +47,20 @@ const updatePrice = asyncHandler(async (req, res) => {
         throw new Error('Price not found')
     }
 
+    const user = await User.findById(req.user.id)
+
+    // Check for user
+    if(!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Make sure logged in user matches the price user
+    if(price.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+    }
+
     const updatedPrice = await Price.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
     res.status(200).json(updatedPrice)
@@ -58,6 +75,20 @@ const deletePrice = asyncHandler(async (req, res) => {
     if(!price) {
         res.status(400)
         throw new Error('Price not found')
+    }
+
+    const user = await User.findById(req.user.id)
+
+    // Check for user
+    if(!user) {
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    // Make sure logged in user matches the price user
+    if(price.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
     }
 
     await price.remove()

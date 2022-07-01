@@ -15,6 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/prices', require('./routes/priceRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
 
 // middleware that overwrites the default express error handler
 // @route   /middleware/errorMiddleware
