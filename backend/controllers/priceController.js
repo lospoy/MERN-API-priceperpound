@@ -1,5 +1,5 @@
 // using async since mongoose returns a promise
-// NOT using try-catch, but error hanlder via 'express-async-handler'
+// Error hanlder via 'express-async-handler' instead of try-catch
 
 const asyncHandler = require('express-async-handler')
 const { restart } = require('nodemon')
