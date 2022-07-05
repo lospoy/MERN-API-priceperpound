@@ -1,4 +1,3 @@
-const { MongoGridFSChunkError } = require('mongodb')
 const mongoose = require('mongoose')
 
 const connectDB = async () => {

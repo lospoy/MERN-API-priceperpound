@@ -2,7 +2,6 @@
 // Error hanlder via 'express-async-handler' instead of try-catch
 
 const asyncHandler = require('express-async-handler')
-const { restart } = require('nodemon')
 
 const Price = require('../models/priceModel')
 const User = require('../models/userModel')
@@ -47,10 +46,8 @@ const updatePrice = asyncHandler(async (req, res) => {
         throw new Error('Price not found')
     }
 
-    const user = await User.findById(req.user.id)
-
     // Check for user
-    if(!user) {
+    if(!req.user) {
         res.status(401)
         throw new Error('User not found')
     }
@@ -61,7 +58,9 @@ const updatePrice = asyncHandler(async (req, res) => {
         throw new Error('User not authorized')
     }
 
-    const updatedPrice = await Price.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const updatedPrice = await Price.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+    })
 
     res.status(200).json(updatedPrice)
 })
@@ -77,10 +76,8 @@ const deletePrice = asyncHandler(async (req, res) => {
         throw new Error('Price not found')
     }
 
-    const user = await User.findById(req.user.id)
-
     // Check for user
-    if(!user) {
+    if(!req.user) {
         res.status(401)
         throw new Error('User not found')
     }

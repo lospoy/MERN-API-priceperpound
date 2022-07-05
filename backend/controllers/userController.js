@@ -1,5 +1,5 @@
-const jwt = require ('jsonwebtoken')
-const bcrypt = require ('bcryptjs')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 
@@ -7,16 +7,17 @@ const User = require('../models/userModel')
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const {name, email, password } = req.body
+    const { name, email, password } = req.body
 
-    if(!name || !email || !password) {
+    if (!name || !email || !password) {
         res.status(400)
         throw new Error('Please fill in all fields')
     }
 
     // Check if user exists
     const userExists = await User.findOne({ email })
-    if(userExists) {
+
+    if (userExists) {
         res.status(400)
         throw new Error(`User with email ${email} already exists`)
     }
@@ -32,7 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
         password: hashedPassword,
     })
 
-    if(user) {
+    if (user) {
         res.status(201).json({
             _id: user.id,
             name: user.name,
@@ -56,7 +57,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     // user.password is already hashed
     // compares unhashed with hashed password
-    if(user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await bcrypt.compare(password, user.password))) {
         res.json({
             _id: user.id,
             name: user.name,

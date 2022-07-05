@@ -5,12 +5,15 @@ const User = require('../models/userModel')
 
 // middleware requires req, res, AND 'next'
 
-const protect = asyncHandler( async(req, res, next) => {
+const protect = asyncHandler(async (req, res, next) => {
     let token
 
     // we're checking for an authorization object in the HTTP headers
     // header looks like 'Bearer tqsfiasfjaksfno' so we'll check that starts with 'Bearer'
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    if  (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+        ) {
         try {
             // Get token from header
             token = req.headers.authorization.split(' ')[1]
@@ -31,7 +34,7 @@ const protect = asyncHandler( async(req, res, next) => {
         }
     }
 
-    if(!token) {
+    if (!token) {
         res.status(401)
         throw new Error('Not authorized, no token')
     }
