@@ -53,7 +53,7 @@ const updatePrice = asyncHandler(async (req, res) => {
     }
 
     // Make sure logged in user matches the price user
-    if(price.user.toString() !== user.id) {
+    if(price.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
     }
@@ -83,7 +83,7 @@ const deletePrice = asyncHandler(async (req, res) => {
     }
 
     // Make sure logged in user matches the price user
-    if(price.user.toString() !== user.id) {
+    if(price.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
     }
