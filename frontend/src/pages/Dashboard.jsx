@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import PriceForm from '../components/PriceForm'
 
 function Dashboard() {
     const navigate = useNavigate()
@@ -19,6 +20,8 @@ function Dashboard() {
                 <h1>Welcome {user && user.name}</h1>
                 <p>Prices Dashboard</p>
             </section>
+
+            <PriceForm />
         </>
     )
 }
