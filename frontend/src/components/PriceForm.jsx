@@ -7,10 +7,10 @@ function PriceForm() {
 
     const dispatch = useDispatch()
 
-    const onSubmit = e => {
+    const onSubmit = (e) => {
         e.preventDefault()
 
-        dispatch(createPrice({text}))
+        dispatch(createPrice({ text }))
         setText('')
     }
 
@@ -19,7 +19,13 @@ function PriceForm() {
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="text">Price</label>
-                    <input type="text" name='text' id='text' value={text} onChange={(e) => setText(e.target.value)}/>
+                    <input
+                        type="text"
+                        name='text'
+                        id='text'
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    />
                 </div>
                 <div className="form-group">
                     <button className="btn btn-block" type='submit'>

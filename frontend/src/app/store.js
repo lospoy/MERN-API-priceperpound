@@ -5,6 +5,6 @@ import priceReducer from '../features/prices/priceSlice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    price: priceReducer,
+    prices: priceReducer,
   },
 });
