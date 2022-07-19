@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import PriceForm from '../components/PriceForm'
 import PriceItem from '../components/PriceItem'
 import Spinner from '../components/Spinner'
-import { getPrices, reset } from '../features/prices/priceSlice'
+import { getPrices } from '../features/prices/priceSlice'
+import { reset } from '../features/auth/authSlice'
+
 
 function Dashboard() {
     const navigate = useNavigate()
@@ -24,12 +26,15 @@ function Dashboard() {
             navigate('/login')
         }
 
+    }, [user, navigate, isError, message])
+
+    useEffect(() => {
         dispatch(getPrices())
 
         return () => {
             dispatch(reset())
         }
-    }, [user, navigate, isError, message, dispatch])
+    }, [dispatch])
 
     if (isLoading) {
         return <Spinner />
