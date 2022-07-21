@@ -8,10 +8,27 @@ const priceSchema = mongoose.Schema(
             required: true,
             ref: 'User',
         },
-        text: {
+        itemPrice: {
+            // price of the item stored in cents to avoid floats
+            type: Number,
+            required: [true, 'Item price required'],
+        },
+        priceCurrency: {
             type: String,
-            required: [true, 'Please write some text'],
-        }
+            required: [true, 'Currency must be specified'],
+        },
+        itemQuantity: {
+            type: Number,
+            required: [true, 'Quantity required'],
+        },
+        quantityUnit: {
+            type: String,
+            required: [true, 'Unit of measure must be specified'],
+        },
+        tags: {
+            type: String,
+            required: [true, 'Please enter at least one tag'],
+        },
     },
     {
         timestamps: true
