@@ -25,18 +25,23 @@ const savePrice = asyncHandler(async (req, res) => {
     // POST REQUEST NOT SAVING PROPERLY TO MONGODB
     // THROWS ERROR BELOW "PLEASE ADD A TEXT FIELD"
     // HOW TO LINK PRICE SCHEMA TO PRICE CONTROLLER ???
-    if(!req.body.text) {
+    if(!req.body.itemPrice) {
         res.status(400)
-        throw new Error('Please add a text field')
+        throw new Error('Please add price')
     }
 
     const price = await Price.create({
         // .text regardless of type? (works with number)
         // @route /models/priceModel
-        text: req.body.itemPrice,
-        text: req.body.priceCurrency,
-        text: req.body.itemPrice,
-        text: req.body.itemPrice,
+        itemPrice: {
+          priceAmount: req.body.itemPrice.priceAmount,
+          priceCurrency: req.body.itemPrice.priceCurrency,
+        },
+        itemQuantity: {
+          quantityAmount: req.body.itemQuantity.quantityAmount,
+          quantityUnit: req.body.itemQuantity.quantityUnit,
+        },
+        tags: req.body.tags,
         user: req.user.id,
     })
 
