@@ -20,6 +20,11 @@ const getPrices = asyncHandler(async (req, res) => {
 // @access  Private
 const savePrice = asyncHandler(async (req, res) => {
     // #c301 >> to use body data you need to add middleware in /server.js 
+
+    // ******** ISSUE **********
+    // POST REQUEST NOT SAVING PROPERLY TO MONGODB
+    // THROWS ERROR BELOW "PLEASE ADD A TEXT FIELD"
+    // HOW TO LINK PRICE SCHEMA TO PRICE CONTROLLER ???
     if(!req.body.text) {
         res.status(400)
         throw new Error('Please add a text field')
@@ -28,7 +33,10 @@ const savePrice = asyncHandler(async (req, res) => {
     const price = await Price.create({
         // .text regardless of type? (works with number)
         // @route /models/priceModel
-        text: req.body.text,
+        text: req.body.itemPrice,
+        text: req.body.priceCurrency,
+        text: req.body.itemPrice,
+        text: req.body.itemPrice,
         user: req.user.id,
     })
 
