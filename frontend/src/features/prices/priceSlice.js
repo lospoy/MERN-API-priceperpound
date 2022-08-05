@@ -71,7 +71,7 @@ export const deletePrice = createAsyncThunk(
 
 
 export const priceSlice = createSlice({
-    name: 'goal',
+    name: 'price',
     initialState,
     reducers: {
         reset: (state) => initialState

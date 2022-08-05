@@ -28,7 +28,7 @@ const getPrices = async (token) => {
     return response.data
 }
 
-// Delete user goal
+// Delete user price
 const deletePrice = async (priceId, token) => {
     const config = {
         headers: {

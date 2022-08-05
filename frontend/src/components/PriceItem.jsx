@@ -7,9 +7,20 @@ function PriceItem({price}) {
     return (
         <div className='price'>
             <div>
+              <span>Price: {price.itemPrice.priceAmount} </span>
+              <span>{price.itemPrice.priceCurrency}</span>
+            </div>
+            <div>
+              <span>Quantity: {price.itemQuantity.quantityAmount} </span>
+              <span>{price.itemQuantity.quantityUnit}</span>
+            </div>
+            <div>
+              <span>Tags: {price.tags} </span>
+            </div>
+            <br></br>
+            <div>
                 {new Date(price.createdAt).toLocaleString('en-US')}
             </div>
-            <h2>{price.text}</h2>
             <button onClick={() => dispatch(deletePrice(price._id))} className="close">X</button>
         </div>
     )
